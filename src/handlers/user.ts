@@ -16,14 +16,19 @@ export const createNewUser = async (req, res) => {
 export const signin = async (req, res) => {
   const user = await prisma.user.findUnique({
     where: {
-      username: req.body.username
-    }
-  })
+      username: req.body.username,
+    },
+  });
 
-  const isPasswordValid = await comparePasswords(req.body.password, user.password)
+  const isPasswordValid = await comparePasswords(
+    req.body.password,
+    user.password
+  );
 
   if (!isPasswordValid) {
-    res.status(401)
-    res.json({message: 'Unauthorized'})
+    res.status(401);
+    res.json({ message: 'Unauthorized' });
   }
-}
+  const token = createJWT(user);
+  res.json({ token });
+};
