@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { body } from 'express-validator';
+import { body, check } from 'express-validator';
 import {
   createProduct,
   deleteProduct,
@@ -14,7 +14,10 @@ import {
   getAllUpdates,
   getOneUpdate,
 } from './handlers/update';
-import { handleInputErrors } from './modules/middleware';
+import {
+  checkIfProductBelongsToUser,
+  handleInputErrors,
+} from './modules/middleware';
 
 const router = Router();
 
@@ -46,14 +49,14 @@ router.get(
   handleInputErrors,
   getAllUpdates
 );
-router.get('/update/:id', getOneUpdate);
+router.get('/update/:id', checkIfProductBelongsToUser, getOneUpdate);
 router.put(
   '/update/:id',
   body('title').optional(),
   body('body').optional(),
   body('status').isIn(['IN_PROGRESS', 'SHIPPED', 'DEPRACATED']).optional(),
   body('version').optional(),
-  body('productId').exists().isString(),
+  checkIfProductBelongsToUser,
   editUpdate
 );
 router.post(
@@ -63,7 +66,7 @@ router.post(
   body('productId').exists().isString(),
   createUpdate
 );
-router.delete('/update/:id', deleteUpdate);
+router.delete('/update/:id', checkIfProductBelongsToUser, deleteUpdate);
 
 /**
  * Update Points

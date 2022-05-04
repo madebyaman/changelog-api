@@ -2,6 +2,17 @@ import prisma from '../db';
 
 // Get all updates
 export const getAllUpdates = async (req, res) => {
+  const product = await prisma.product.findFirst({
+    where: {
+      id: req.body.productId,
+      belongsToId: req.user.id,
+    },
+  });
+
+  if (!product) {
+    return res.json({ message: "Product doesn't belong to user" });
+  }
+
   const updates = await prisma.update.findMany({
     where: {
       productId: req.body.productId,
@@ -19,48 +30,19 @@ export const getOneUpdate = async (req, res) => {
     },
   });
 
-  if (!update) {
-    return res.json({ message: 'Nothing to get' });
-  }
-
-  const product = await prisma.product.findFirst({
-    where: {
-      id: update.productId,
-      belongsToId: req.user.id,
-    },
-  });
-
-  if (!product) {
-    return res.json({ message: "Product doesn't belong to user" });
-  }
-
   res.json({ data: update });
 };
 
 // Edit an update
 export const editUpdate = async (req, res) => {
-  const product = await prisma.product.findUnique({
+  const update = await prisma.update.update({
     where: {
-      id: req.body.productId,
+      id: req.params.id,
     },
+    data: req.body,
   });
 
-  if (product) {
-    if (product.belongsToId !== req.user.id) {
-      return res.statusCode(401).json({ message: 'no' });
-    } else {
-      const update = await prisma.update.update({
-        where: {
-          id: req.params.id,
-        },
-        data: req.body,
-      });
-
-      res.json({ data: update });
-    }
-  } else {
-    return res.json({ message: 'no' });
-  }
+  res.json({ data: update });
 };
 
 // Create new update
@@ -76,7 +58,13 @@ export const createUpdate = async (req, res) => {
       return res.statusCode(401).json({ message: 'no' });
     } else {
       const update = await prisma.update.create({
-        data: req.body,
+        data: {
+          title: req.body.title,
+          body: req.body.body,
+          product: {
+            connect: { id: product.id },
+          },
+        },
       });
 
       return res.json({ data: update });
@@ -88,27 +76,6 @@ export const createUpdate = async (req, res) => {
 
 // Delete an update
 export const deleteUpdate = async (req, res) => {
-  const update = await prisma.update.findFirst({
-    where: {
-      id: req.params.id,
-    },
-  });
-
-  if (!update) {
-    return res.json({ message: 'Nothing to delete' });
-  }
-
-  const product = await prisma.product.findFirst({
-    where: {
-      id: update.productId,
-      belongsToId: req.user.id,
-    },
-  });
-
-  if (!product) {
-    return res.json({ message: "Product doesn't belong to user" });
-  }
-
   const deletedUpdate = await prisma.update.delete({
     where: {
       id: req.params.id,
