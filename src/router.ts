@@ -1,22 +1,22 @@
 import { Router } from 'express';
-import { body, check } from 'express-validator';
+import { body } from 'express-validator';
 import {
   createProduct,
   deleteProduct,
   getOneProduct,
   getProducts,
-  updateProduct,
+  updateProduct
 } from './handlers/product';
 import {
   createUpdate,
   deleteUpdate,
   editUpdate,
   getAllUpdates,
-  getOneUpdate,
+  getOneUpdate
 } from './handlers/update';
 import {
   checkIfProductBelongsToUser,
-  handleInputErrors,
+  handleInputErrors
 } from './modules/middleware';
 
 const router = Router();
