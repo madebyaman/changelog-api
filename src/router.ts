@@ -5,18 +5,18 @@ import {
   deleteProduct,
   getOneProduct,
   getProducts,
-  updateProduct
+  updateProduct,
 } from './handlers/product';
 import {
   createUpdate,
   deleteUpdate,
   editUpdate,
   getAllUpdates,
-  getOneUpdate
+  getOneUpdate,
 } from './handlers/update';
 import {
   checkIfProductBelongsToUser,
-  handleInputErrors
+  handleInputErrors,
 } from './modules/middleware';
 
 const router = Router();
@@ -56,6 +56,7 @@ router.put(
   body('body').optional(),
   body('status').isIn(['IN_PROGRESS', 'SHIPPED', 'DEPRACATED']).optional(),
   body('version').optional(),
+  handleInputErrors,
   checkIfProductBelongsToUser,
   editUpdate
 );
@@ -64,27 +65,20 @@ router.post(
   body('title').exists().isString(),
   body('body').exists().isString(),
   body('productId').exists().isString(),
+  handleInputErrors,
   createUpdate
 );
 router.delete('/update/:id', checkIfProductBelongsToUser, deleteUpdate);
 
-/**
- * Update Points
- */
-router.get('/updatepoint', () => {});
-router.get('/updatepoint/:id', () => {});
-router.put(
-  '/updatepoint/:id',
-  body('name').optional().isString,
-  body('description').optional().isString(),
-  () => {}
-);
-router.post(
-  '/updatepoint',
-  body('name').isString,
-  body('description').isString(),
-  () => {}
-);
-router.delete('/updatepoint/:id', () => {});
+// Error handling
+router.use((err, req, res, next) => {
+  if (err.type === 'auth') {
+    res.status(401).json({ message: 'Unauthorized' });
+  } else if (err.type === 'input') {
+    res.status(400).json({ message: 'invalid input' });
+  } else {
+    res.status(500).json({ message: "oops that's on us" });
+  }
+});
 
 export default router;
