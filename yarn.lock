@@ -824,6 +824,11 @@
   dependencies:
     "@types/superagent" "*"
 
+"@types/uuid@^8.3.4":
+  version "8.3.4"
+  resolved "https://registry.npmjs.org/@types/uuid/-/uuid-8.3.4.tgz"
+  integrity sha512-c/I8ZRb51j+pYGAu5CrFMRxqZ2ke4y2grEBO5AUjgSkSk+qT2Ea+OdWElz/OiMf5MNpn2b17kuVBwZLQJXzihw==
+
 "@types/yargs-parser@*":
   version "21.0.0"
   resolved "https://registry.npmjs.org/@types/yargs-parser/-/yargs-parser-21.0.0.tgz"
@@ -1565,6 +1570,11 @@ express@^4.18.2:
     type-is "~1.6.18"
     utils-merge "1.0.1"
     vary "~1.1.2"
+
+faker@5.5.3:
+  version "5.5.3"
+  resolved "https://registry.npmjs.org/faker/-/faker-5.5.3.tgz"
+  integrity sha512-wLTv2a28wjUyWkbnX7u/ABZBkUkIF2fCd73V6P2oFqEGEktDfzWx4UxrSqtPRw0xPRAcjeAOIiJWqZm3pP4u3g==
 
 fast-json-stable-stringify@^2.1.0, fast-json-stable-stringify@2.x:
   version "2.1.0"
@@ -3301,6 +3311,11 @@ utils-merge@1.0.1:
   version "1.0.1"
   resolved "https://registry.npmjs.org/utils-merge/-/utils-merge-1.0.1.tgz"
   integrity sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==
+
+uuid@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.npmjs.org/uuid/-/uuid-9.0.0.tgz"
+  integrity sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==
 
 v8-compile-cache-lib@^3.0.1:
   version "3.0.1"
