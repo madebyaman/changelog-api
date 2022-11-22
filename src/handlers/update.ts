@@ -34,15 +34,19 @@ export const getOneUpdate = async (req, res) => {
 };
 
 // Edit an update
-export const editUpdate = async (req, res) => {
-  const update = await prisma.update.update({
-    where: {
-      id: req.params.id,
-    },
-    data: req.body,
-  });
+export const editUpdate = async (req, res, next) => {
+  try {
+    const update = await prisma.update.update({
+      where: {
+        id: req.params.id,
+      },
+      data: req.body,
+    });
 
-  res.json({ data: update });
+    res.json({ data: update });
+  } catch (e) {
+    next(e);
+  }
 };
 
 // Create new update
