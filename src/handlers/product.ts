@@ -1,6 +1,5 @@
 import prisma from '../db';
 
-// Get all products
 export const getProducts = async (req, res, next) => {
   try {
     const user = await prisma.user.findUnique({

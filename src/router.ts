@@ -21,9 +21,6 @@ import {
 
 const router = Router();
 
-/**
- * Product
- */
 router.get('/product', getProducts);
 router.get('/product/:id', getOneProduct);
 router.put(
