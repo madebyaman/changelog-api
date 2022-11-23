@@ -7,19 +7,16 @@ export const getAllUpdates = async (req, res) => {
       id: req.body.productId,
       belongsToId: req.user.id,
     },
+    include: {
+      updates: true,
+    },
   });
 
   if (!product) {
     return res.json({ message: "Product doesn't belong to user" });
   }
 
-  const updates = await prisma.update.findMany({
-    where: {
-      productId: req.body.productId,
-    },
-  });
-
-  res.json({ data: updates });
+  res.json({ data: product.updates });
 };
 
 // Get one update

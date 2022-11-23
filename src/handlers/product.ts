@@ -21,15 +21,19 @@ export const getProducts = async (req, res, next) => {
 export const getOneProduct = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const product = await prisma.product.findFirst({
+    const product = await prisma.product.findUnique({
       where: {
         id,
-        belongsTo: req.user.id,
       },
     });
 
+    if (product.belongsToId !== req.user.id) {
+      return res.status(400).json({ message: 'Bad input' });
+    }
+
     res.json({ data: product });
   } catch (e) {
+    console.log(e);
     e.type = 'input';
     next(e);
   }

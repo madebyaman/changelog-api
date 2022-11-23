@@ -30,16 +30,15 @@ export const signin = async (req, res, next) => {
     });
 
     isPasswordValid = await comparePasswords(req.body.password, user.password);
+    if (!isPasswordValid) {
+      res.status(401);
+      res.json({ message: 'Unauthorized' });
+    }
+    const token = createJWT(user);
+    res.json({ token });
   } catch (e) {
     // Not catching errors due to server crashing
     e.type = 'input';
     next(e);
   }
-
-  if (!isPasswordValid) {
-    res.status(401);
-    res.json({ message: 'Unauthorized' });
-  }
-  const token = createJWT(user);
-  res.json({ token });
 };
