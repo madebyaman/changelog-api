@@ -1,6 +1,5 @@
-import dotenv from 'dotenv';
 import app from './server';
-dotenv.config();
+require('dotenv').config();
 import config from './config';
 
 app.listen(config.port, () => {
