@@ -12,6 +12,12 @@ cd node-api
 npm i
 ```
 
+Generate Prisma schema
+
+```sh
+npx prisma migrate dev
+```
+
 Run a development server
 
 ```sh
