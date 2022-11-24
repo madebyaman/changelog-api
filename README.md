@@ -1,6 +1,9 @@
 # Changelog API
 
-This app is built with ExpressJS, Prisma, and PostgresQL. [View the documentation](https://documenter.getpostman.com/view/24584839/2s8YsnYcPc).
+This app is built with ExpressJS, Prisma, and PostgresQL.
+
+[View the documentation](https://documenter.getpostman.com/view/24584839/2s8YsnYcPc).
+[Interact with API](https://changelog-api.onrender.com)
 
 ## Getting Started
 
